@@ -1,0 +1,27 @@
+{
+  "name": "idb-schema",
+  "description": "DSL to manage IndexedDB schema transaction",
+  "repository": "git://github.com/treojs/idb-schema.git",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "keywords": [
+    "IndexedDB",
+    "treo"
+  ],
+  "scripts": {
+    "build": "browserify -s idbSchema lib/index.js > dist/idb-schema.js",
+    "test": "browserify-test",
+    "start": "browserify-test -w"
+  },
+  "devDependencies": {
+    "browserify-test": "^1.0.0",
+    "browserify": "*",
+    "chai": "*"
+  },
+  "files": [
+    "lib",
+    "Readme.md",
+    "History.md"
+  ]
+}

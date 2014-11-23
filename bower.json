@@ -1,0 +1,19 @@
+{
+  "name": "idb-schema",
+  "description": "DSL to manage IndexedDB schema transaction",
+  "repository": "git://github.com/treojs/idb-schema.git",
+  "version": "0.0.0",
+  "keywords": [
+    "IndexedDB",
+    "treo"
+  ],
+  "ignore": [
+    "**/.*",
+    "lib/",
+    "test/",
+    "package.json"
+  ],
+  "main": [
+    "dist/idb-schema.js"
+  ]
+}
