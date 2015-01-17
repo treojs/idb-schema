@@ -7,21 +7,22 @@
   "main": "lib/index.js",
   "keywords": [
     "IndexedDB",
+    "schema",
     "treo"
   ],
   "scripts": {
-    "build": "browserify -s idbSchema lib/index.js > dist/idb-schema.js",
     "test": "browserify-test",
     "start": "browserify-test -w"
   },
+  "dependencies": {
+    "component-type": "^1.1.0",
+    "object-values": "^1.0.0"
+  },
   "devDependencies": {
-    "browserify-test": "^1.0.0",
-    "browserify": "*",
+    "browserify-test": "^1.0.1",
     "chai": "*"
   },
   "files": [
-    "lib",
-    "Readme.md",
-    "History.md"
+    "lib"
   ]
 }

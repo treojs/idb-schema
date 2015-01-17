@@ -25,7 +25,10 @@ var schema = createSchema()
   .version(3)
     .addStore('magazines')
     .addIndex('byPublisher', 'publisher')
-    .addIndex('byFrequency', 'frequency');
+    .addIndex('byFrequency', 'frequency')
+  .version(4)
+    .getStore('books')
+    .dropIndex('byTitle');
 
 // get schema version
 schema.version(); // 3
@@ -38,6 +41,17 @@ schema.stores();
 // [{ name: 'books', indexes: [{..}, {..}, {..}], keyPath: 'isbn' },
 //  { name: 'magazines', indexes: [{..}, {..}] }]
 ```
+
+## API
+
+### schema.callback()
+### schema.stores()
+### schema.version([number])
+### schema.addStore(name, [opts])
+### schema.dropStore(name)
+### schema.getStore(name)
+### schema.addIndex(name, field, [opts])
+### schema.dropIndex(name)
 
 ## License
 
