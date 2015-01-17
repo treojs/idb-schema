@@ -5,19 +5,7 @@ DSL to manage IndexedDB schema.
 ## Installation
 
 ```bash
-npm install idb-schema
-bower install idb-schema
-```
-
-Standalone build available as [dist/idb-schema.js](/dist/idb-schema.js).
-
-```html
-<script src="dist/idb-schema.js"></script>
-<script>
-  var schema = window.idbSchema()
-    .version(1).addStore('books')
-    .version(2).addStore('magazines');
-</script>
+npm install --save idb-schema
 ```
 
 ## Example
