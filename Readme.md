@@ -27,8 +27,8 @@ var schema = new Schema()
   .addIndex('byPublisher', 'publisher')
   .addIndex('byFrequency', 'frequency')
 .version(4)
-  .getStore('books')
-  .dropIndex('byTitle');
+  .getStore('magazines')
+  .dropIndex('byPublisher');
 
 // get schema version
 schema.version(); // 4
@@ -38,8 +38,8 @@ schema.callback();
 
 // get description of the stores
 schema.stores();
-// [{ name: 'books', indexes: [{..}, {..}], keyPath: 'isbn' },
-//  { name: 'magazines', indexes: [{..}, {..}] }]
+// [{ name: 'books', indexes: [{..}, {..}, {..}], keyPath: 'isbn' },
+//  { name: 'magazines', indexes: [{..}] }]
 ```
 
 ## API
