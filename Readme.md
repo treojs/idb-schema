@@ -28,7 +28,7 @@ var schema = new Schema()
   .addIndex('byFrequency', 'frequency')
 .version(4)
   .getStore('magazines')
-  .dropIndex('byPublisher');
+  .delIndex('byPublisher');
 
 // get schema version
 schema.version(); // 4

@@ -90,9 +90,9 @@ describe('idb-schema', function() {
       db.close();
 
       schema = schema.version(4)
-        .dropStore('books')
+        .delStore('books')
         .getStore('magazines')
-        .dropIndex('byPublisher');
+        .delIndex('byPublisher');
 
       req = idb.open(dbName, schema.version());
       req.onupgradeneeded = schema.callback();
