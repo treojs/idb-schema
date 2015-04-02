@@ -10,7 +10,7 @@ if (!idb) {
 }
 
 describe('idb-schema', function() {
-  var dbName = 'mydb2';
+  var dbName = 'mydb';
   var db;
 
   function clean(done) {
@@ -19,7 +19,7 @@ describe('idb-schema', function() {
       db = null;
     }
     var req = idb.deleteDatabase(dbName);
-    req.onerror = req.onblocked = done;
+    req.onblocked = function onblocked() { clean(done) }; // transaction was not complete, repeat
     req.onsuccess = function onsuccess() { done() };
   }
 
@@ -31,7 +31,7 @@ describe('idb-schema', function() {
       .addStore('modules', { key: 'name' })
       .addIndex('byKeywords', 'keywords', { multiEntry: true })
       .addIndex('byAuthor', 'author', { unique: true })
-      .addIndex('byStars', 'stars')
+      .addIndex('byRating', ['stars', 'position'])
       .addIndex('byMaintainers', 'maintainers', { multi: true })
       .addStore('users', { increment: true });
 
@@ -52,7 +52,7 @@ describe('idb-schema', function() {
       expect(modules.keyPath).equal('name');
       expect(modules.autoIncrement).false;
       expect([].slice.call(modules.indexNames).sort()).eql(
-        ['byAuthor', 'byKeywords', 'byMaintainers', 'byStars']);
+        ['byAuthor', 'byKeywords', 'byMaintainers', 'byRating']);
 
       var users = db.transaction(['users'], 'readonly').objectStore('users');
       expect(users.keyPath).null;
