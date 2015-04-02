@@ -1,6 +1,6 @@
 # idb-schema [![Build Status](https://travis-ci.org/treojs/idb-schema.png?branch=master)](https://travis-ci.org/treojs/idb-schema)
 
-DSL to manage IndexedDB schema.
+DSL to manage IndexedDB schema migrations.
 
 ## Installation
 
@@ -36,7 +36,7 @@ schema.version(); // 4
 // generate callback for db.onupgradeneeded event
 schema.callback();
 
-// get description of the stores
+// get description of stores
 schema.stores();
 // [{ name: 'books', indexes: [{..}, {..}, {..}], keyPath: 'isbn' },
 //  { name: 'magazines', indexes: [{..}] }]
@@ -45,13 +45,101 @@ schema.stores();
 ## API
 
 ### schema.callback()
+
+Generate `onupgradeneeded` callback.
+
+```js
+var req = indexedDB.open('mydb', schema.version());
+req.onupgradeneeded = schema.callback();
+req.onsuccess = function onsuccess(e) {
+  var db = e.target.result;
+}
+```
+
 ### schema.stores()
+
+Get description of stores & indexes.
+It's useful, when you need to get JSON representation of database schema.
+
+```json
+[
+  {
+    "name": "books",
+    "indexes": [
+      {
+        "name": "byTitle",
+        "field": "title",
+        "multiEntry": false,
+        "unique": true
+      },
+      {
+        "name": "byAuthor",
+        "field": "author",
+        "multiEntry": false,
+        "unique": false
+      },
+      {
+        "name": "byDate",
+        "field": [
+          "year",
+          "month"
+        ],
+        "multiEntry": false,
+        "unique": false
+      }
+    ],
+    "keyPath": "isbn",
+    "autoIncrement": false
+  },
+  {
+    "name": "magazines",
+    "indexes": [
+      {
+        "name": "byFrequency",
+        "field": "frequency",
+        "multiEntry": false,
+        "unique": false
+      }
+    ],
+    "keyPath": null,
+    "autoIncrement": false
+  }
+]
+```
+
 ### schema.version([number])
+
+Get current version or set new version to `number` and reset current store.
+Use it to separate migrations on time.
+
 ### schema.addStore(name, [opts])
-### schema.dropStore(name)
+
+Create object store with `name`.
+
+Options:
+* `key` || `keyPath` - primary key (default: null)
+* `increment` || `autoIncrement` - increment key automatically (default: false)
+
+### schema.delStore(name)
+
+Delete store by `name`.
+
 ### schema.getStore(name)
+
+Switch current store.
+Use it to make operations with indexes.
+
 ### schema.addIndex(name, field, [opts])
-### schema.dropIndex(name)
+
+Create index with `name` and to `field` (or array of fields).
+
+Options:
+* `unique` - (default: false)
+* `multi` || `multiEntry` - (default: false)
+
+### schema.delIndex(name)
+
+Delete index by `name` from current store.
 
 ## License
 
