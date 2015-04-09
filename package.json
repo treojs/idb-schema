@@ -1,8 +1,8 @@
 {
   "name": "idb-schema",
-  "description": "DSL to manage IndexedDB schema",
+  "description": "DSL to manage IndexedDB schema migrations",
   "repository": "git://github.com/treojs/idb-schema.git",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "license": "MIT",
   "main": "lib/index.js",
   "keywords": [
@@ -21,7 +21,8 @@
   },
   "devDependencies": {
     "browserify-test": "^1.1.0",
-    "chai": "^2.2.0"
+    "chai": "^2.2.0",
+    "treo-websql": "^1.0.0"
   },
   "files": [
     "lib"
