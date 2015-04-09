@@ -23,7 +23,6 @@ describe('idb-schema', function() {
     req.onsuccess = function onsuccess() { done() };
   }
 
-  before(clean);
   afterEach(clean);
 
   it('describes database', function(done) {
