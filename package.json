@@ -1,6 +1,6 @@
 {
   "name": "idb-schema",
-  "description": "DSL to manage IndexedDB schema migrations",
+  "description": "A DSL to manage IndexedDB schema migrations",
   "repository": "git://github.com/treojs/idb-schema.git",
   "version": "1.0.0",
   "license": "MIT",

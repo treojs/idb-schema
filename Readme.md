@@ -1,12 +1,14 @@
-# idb-schema [![Build Status](https://travis-ci.org/treojs/idb-schema.png?branch=master)](https://travis-ci.org/treojs/idb-schema)
+# idb-schema
 
-DSL to manage IndexedDB schema migrations.
+[![](https://img.shields.io/npm/v/idb-schema.svg)](https://npmjs.org/package/idb-schema)
+[![](https://img.shields.io/travis/treojs/idb-schema.svg)](https://travis-ci.org/treojs/idb-schema)
+[![](http://img.shields.io/npm/dm/idb-schema.svg)](https://npmjs.org/package/idb-schema)
+
+A DSL to manage IndexedDB schema migrations.
 
 ## Installation
 
-```bash
-npm install --save idb-schema
-```
+    npm install --save idb-schema
 
 ## Example
 
