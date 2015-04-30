@@ -4,11 +4,13 @@
 [![](https://img.shields.io/travis/treojs/idb-schema.svg)](https://travis-ci.org/treojs/idb-schema)
 [![](http://img.shields.io/npm/dm/idb-schema.svg)](https://npmjs.org/package/idb-schema)
 
-A DSL to manage IndexedDB schema migrations.
+> IndexedDB schema manager.
 
 ## Installation
 
     npm install --save idb-schema
+
+It works in legacy browsers through [IndexedDBShim](https://github.com/axemclion/IndexedDBShim).
 
 ## Example
 
