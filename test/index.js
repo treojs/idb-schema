@@ -1,4 +1,5 @@
 var expect = require('chai').expect;
+var pluck = require('lodash.pluck');
 var Schema = require('../lib');
 var idb = global.indexedDB;
 
@@ -106,5 +107,27 @@ describe('idb-schema', function() {
         done();
       };
     };
+  });
+
+  it('clone', function() {
+    var schema1 = new Schema()
+    .version(1)
+      .addStore('books', { keyPath: 'isbn' })
+      .addIndex('byTitle', 'title', { unique: true })
+      .addIndex('byAuthor', 'author')
+    .version(2)
+      .getStore('books')
+      .addIndex('byYear', 'year');
+
+    var schema2 = schema1.clone()
+    .version(3)
+      .addStore('magazines')
+      .addIndex('byPublisher', 'publisher')
+      .addIndex('byFrequency', 'frequency');
+
+    expect(schema1.version()).equal(2);
+    expect(schema2.version()).equal(3);
+    expect(pluck(schema1.stores(), 'name')).eql(['books']);
+    expect(pluck(schema2.stores(), 'name')).eql(['books', 'magazines']);
   });
 });

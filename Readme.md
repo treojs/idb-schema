@@ -143,6 +143,11 @@ Options:
 
 Delete index by `name` from current store.
 
+### schema.clone()
+
+Make a deep copy of current schema.
+It's useful, when you need to support 2 different schemas with the same initial structure.
+
 ## License
 
 MIT
