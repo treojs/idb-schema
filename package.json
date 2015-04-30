@@ -2,7 +2,7 @@
   "name": "idb-schema",
   "description": "IndexedDB schema manager",
   "repository": "git://github.com/treojs/idb-schema.git",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "license": "MIT",
   "main": "lib/index.js",
   "keywords": [
