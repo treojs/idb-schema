@@ -11,8 +11,8 @@
     "treo"
   ],
   "scripts": {
-    "test": "browserify-test",
-    "start": "browserify-test -w"
+    "test": "browserify-test -t babelify",
+    "start": "browserify-test -t babelify -w"
   },
   "dependencies": {
     "component-clone": "^0.2.2",
@@ -20,10 +20,12 @@
     "object-values": "^1.0.0"
   },
   "devDependencies": {
+    "babelify": "^6.0.2",
     "browserify-test": "^1.2.0",
     "chai": "^2.3.0",
+    "indexeddbshim": "^1.0.13",
     "lodash.pluck": "^3.1.0",
-    "treo-websql": "^1.0.3"
+    "lodash.toarray": "^3.0.1"
   },
   "files": [
     "lib"
