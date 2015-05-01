@@ -1,3 +1,7 @@
+## 2.0.0 / 2015-05-01
+
+* remove legacy `dropStore` and `dropIndex`
+
 ## 1.1.0 / 2015-04-30
 
 * add schema.clone()
