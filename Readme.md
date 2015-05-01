@@ -62,8 +62,7 @@ req.onsuccess = function onsuccess(e) {
 
 ### schema.stores()
 
-Get description of stores & indexes.
-It's useful, when you need to get JSON representation of database schema.
+Get JSON representation of database schema.
 
 ```json
 [
@@ -147,8 +146,7 @@ Delete index by `name` from current store.
 
 ### schema.clone()
 
-Make a deep copy of current schema.
-It's useful, when you need to support 2 different schemas with the same initial structure.
+Make a deep clone of current schema.
 
 ## License
 

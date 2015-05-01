@@ -1,26 +1,26 @@
-const expect = require('chai').expect
-const pluck = require('lodash.pluck')
-const toArray = require('lodash.toarray')
-const Schema = require('../lib')
+var expect = require('chai').expect
+var pluck = require('lodash.pluck')
+var toArray = require('lodash.toarray')
+var Schema = require('../lib')
 if (!global.indexedDB) require('indexeddbshim')
 
-describe('idb-schema', () => {
-  const idb = global.indexedDB
-  const dbName = 'mydb'
-  let db
+describe('idb-schema', function() {
+  var idb = global.indexedDB
+  var dbName = 'mydb'
+  var db
 
   afterEach(function clean(done) {
     if (db) {
       db.close()
       db = null
     }
-    const req = idb.deleteDatabase(dbName)
-    req.onblocked = () => { clean(done) } // transaction was not complete, repeat
-    req.onsuccess = () => { done() }
+    var req = idb.deleteDatabase(dbName)
+    req.onblocked = function onblocked() { clean(done) } // transaction was not complete, repeat
+    req.onsuccess = function onsuccess() { done() }
   })
 
-  it('describes database', (done) => {
-    const schema = new Schema()
+  it('describes database', function(done) {
+    var schema = new Schema()
     .addStore('modules', { key: 'name' })
     .addIndex('byKeywords', 'keywords', { multiEntry: true })
     .addIndex('byAuthor', 'author', { unique: true })
@@ -33,21 +33,21 @@ describe('idb-schema', () => {
     expect(schema.stores()[0].indexes).length(4)
     expect(schema.stores()[1]).eql({ name: 'users', indexes: [], keyPath: null, autoIncrement: true })
 
-    const req = idb.open(dbName, schema.version())
+    var req = idb.open(dbName, schema.version())
     req.onupgradeneeded = schema.callback()
     req.onerror = req.onblocked = done
-    req.onsuccess = (e) => {
+    req.onsuccess = function onsuccess(e) {
       db = e.target.result
       expect(db.version).equal(1)
       expect(toArray(db.objectStoreNames)).eql(['modules', 'users'])
 
-      const modules = db.transaction(['modules'], 'readonly').objectStore('modules')
+      var modules = db.transaction(['modules'], 'readonly').objectStore('modules')
       expect(modules.keyPath).equal('name')
       expect(modules.autoIncrement).false
       expect(toArray(modules.indexNames).sort()).eql(
         ['byAuthor', 'byKeywords', 'byMaintainers', 'byRating'])
 
-      const users = db.transaction(['users'], 'readonly').objectStore('users')
+      var users = db.transaction(['users'], 'readonly').objectStore('users')
       expect(users.keyPath).null
       expect(users.autoIncrement).true
 
@@ -59,8 +59,8 @@ describe('idb-schema', () => {
     }
   })
 
-  it('enables cascading migrations', (done) => {
-    let schema = new Schema()
+  it('enables cascading migrations', function(done) {
+    var schema = new Schema()
     .version(1)
       .addStore('books', { keyPath: 'isbn' })
       .addIndex('byTitle', 'title', { unique: true })
@@ -73,10 +73,10 @@ describe('idb-schema', () => {
       .addIndex('byPublisher', 'publisher')
       .addIndex('byFrequency', 'frequency')
 
-    let req = idb.open(dbName, schema.version())
+    var req = idb.open(dbName, schema.version())
     req.onupgradeneeded = schema.callback()
     req.onerror = req.onblocked = done
-    req.onsuccess = (e) => {
+    req.onsuccess = function onsuccess(e) {
       db = e.target.result
       expect(db.version).equal(3)
       expect(toArray(db.objectStoreNames)).eql(['books', 'magazines'])
@@ -90,24 +90,20 @@ describe('idb-schema', () => {
       req = idb.open(dbName, schema.version())
       req.onupgradeneeded = schema.callback()
       req.onerror = req.onblocked = done
-      req.onsuccess = (e) => {
-        try {
-          db = e.target.result
-          expect(db.version).equal(4)
-          expect(toArray(db.objectStoreNames)).eql(['magazines'])
+      req.onsuccess = function onsuccess(e) {
+        db = e.target.result
+        expect(db.version).equal(4)
+        expect(toArray(db.objectStoreNames)).eql(['magazines'])
 
-          const magazines = db.transaction(['magazines'], 'readonly').objectStore('magazines')
-          expect(toArray(magazines.indexNames)).eql(['byFrequency'])
-          done()
-        } catch(err) {
-          done(err)
-        }
+        var magazines = db.transaction(['magazines'], 'readonly').objectStore('magazines')
+        expect(toArray(magazines.indexNames)).eql(['byFrequency'])
+        done()
       }
     }
   })
 
-  it('clone', () => {
-    const schema1 = new Schema()
+  it('#clone', function() {
+    var schema1 = new Schema()
     .version(1)
       .addStore('books', { keyPath: 'isbn' })
       .addIndex('byTitle', 'title', { unique: true })
@@ -116,7 +112,7 @@ describe('idb-schema', () => {
       .getStore('books')
       .addIndex('byYear', 'year')
 
-    const schema2 = schema1.clone()
+    var schema2 = schema1.clone()
     .version(3)
       .addStore('magazines')
       .addIndex('byPublisher', 'publisher')
