@@ -1,6 +1,6 @@
 {
-  "ecmaFeatures": {
-    "modules": true
+  "env": {
+    "node": true
   },
   "rules": {
     "indent": [2, 2],
