@@ -15,7 +15,7 @@ It works in legacy browsers through [IndexedDBShim](https://github.com/axemclion
 ## Example
 
 ```js
-var Schema = require('idb-schema');
+var Schema = require('idb-schema')
 
 // define schema
 var schema = new Schema()
@@ -32,18 +32,19 @@ var schema = new Schema()
   .addIndex('byFrequency', 'frequency')
 .version(4)
   .getStore('magazines')
-  .delIndex('byPublisher').addCallback(function (upgradeNeededEvent) {
+  .delIndex('byPublisher')
+  .addCallback(function(upgradeNeededEvent) {
     // Do something else
-  });
+  })
 
 // get schema version
-schema.version(); // 4
+schema.version() // 4
 
 // generate callback for db.onupgradeneeded event
-schema.callback();
+schema.callback()
 
 // get description of stores
-schema.stores();
+schema.stores()
 // [{ name: 'books', indexes: [{..}, {..}, {..}], keyPath: 'isbn' },
 //  { name: 'magazines', indexes: [{..}] }]
 ```
@@ -55,10 +56,10 @@ schema.stores();
 Generate `onupgradeneeded` callback.
 
 ```js
-var req = indexedDB.open('mydb', schema.version());
-req.onupgradeneeded = schema.callback();
+var req = indexedDB.open('mydb', schema.version())
+req.onupgradeneeded = schema.callback()
 req.onsuccess = function onsuccess(e) {
-  var db = e.target.result;
+  var db = e.target.result
 }
 ```
 
@@ -157,4 +158,4 @@ Make a deep clone of current schema.
 
 ## License
 
-MIT
+[MIT](./LICENSE)
