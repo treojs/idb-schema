@@ -14,6 +14,7 @@
     "lib"
   ],
   "scripts": {
+    "prepublish": "babel src --out-dir lib",
     "test": "eslint lib/ test/ && browserify-test --transform babelify",
     "development": "browserify-test --transform babelify --watch"
   },
@@ -23,6 +24,7 @@
     "object-values": "^1.0.0"
   },
   "devDependencies": {
+    "babel": "^5.8.29",
     "babel-eslint": "^4.1.3",
     "babelify": "^6.4.0",
     "browserify-test": "^2.0.0",

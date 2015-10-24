@@ -1,13 +1,11 @@
 {
   "env": {
-    "commonjs": true,
     "mocha": true
   },
   "extends": "airbnb/base",
   "rules": {
     "semi": [2, "never"],
-    "no-use-before-define": [2, "nofunc"],
+    "object-curly-spacing": [2, "always"],
     "id-length": 0,
-    "object-curly-spacing": [2, "always"]
   }
 }

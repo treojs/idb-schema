@@ -10,7 +10,7 @@ import values from 'object-values'
 const MAX_VERSION = Math.pow(2, 32) - 1
 
 /**
- * Expose `Schema`.
+ * Export `Schema`.
  */
 
 export default class Schema {
@@ -30,7 +30,10 @@ export default class Schema {
 
   version(version) {
     if (!arguments.length) return this._current.version
-    if (type(version) !== 'number' || version < 1 || version < this.version() || version > MAX_VERSION) {
+    if (type(version) !== 'number'
+    || version < 1
+    || version < this.version()
+    || version > MAX_VERSION) {
       throw new TypeError('not valid version')
     }
 

@@ -2,7 +2,7 @@ import treoWebsql from 'treo-websql'
 import { expect } from 'chai'
 import pluck from 'lodash.pluck'
 import toArray from 'lodash.toarray'
-import Schema from '../lib'
+import Schema from '../src'
 
 treoWebsql.polyfill()
 const idb = global.indexedDB
