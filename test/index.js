@@ -28,7 +28,7 @@ describe('idb-schema', () => {
     .addIndex('byAuthor', 'author', { unique: true })
     .addIndex('byRating', ['stars', 'position'])
     .addIndex('byMaintainers', 'maintainers', { multi: true })
-    .addStore('users', { increment: true })
+    .addStore('users', { increment: true, keyPath: 'id' })
     .addCallback((e) => {
       const users = e.target.transaction.objectStore('users')
       users.put({ name: 'Fred' })
@@ -39,7 +39,7 @@ describe('idb-schema', () => {
     expect(schema.callback()).a('function')
     expect(schema.version()).equal(1)
     expect(schema.stores()[0].indexes).length(4)
-    expect(schema.stores()[1]).eql({ name: 'users', indexes: [], keyPath: null, autoIncrement: true })
+    expect(schema.stores()[1]).eql({ name: 'users', indexes: [], keyPath: 'id', autoIncrement: true })
 
     const req = idb.open(dbName, schema.version())
     req.onupgradeneeded = schema.callback()
@@ -56,8 +56,8 @@ describe('idb-schema', () => {
         ['byAuthor', 'byKeywords', 'byMaintainers', 'byRating'])
 
       const users = db.transaction(['users'], 'readonly').objectStore('users')
-      expect(users.keyPath).equal(null)
       expect(users.autoIncrement).equal(true)
+      expect(users.keyPath).equal('id')
 
       expect(modules.index('byMaintainers').unique).equal(false)
       expect(modules.index('byMaintainers').multiEntry).equal(true)

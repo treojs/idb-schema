@@ -68,6 +68,10 @@ export default class Schema {
       keyPath: opts.key || opts.keyPath || null,
       autoIncrement: opts.increment || opts.autoIncrement || false,
     }
+    if (store.autoIncrement && !store.keyPath) {
+      throw new TypeError('set keyPath in order to use autoIncrement')
+    }
+
     this._stores[name] = store
     this._versions[this.version()].stores.push(store)
     this._current.store = store
