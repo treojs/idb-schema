@@ -1,25 +1,31 @@
 import treoWebsql from 'treo-websql'
 import { expect } from 'chai'
-import pluck from 'lodash.pluck'
-import toArray from 'lodash.toarray'
+import { pluck, toArray } from 'lodash'
 import Schema from '../src'
 
 treoWebsql.polyfill()
 const idb = global.indexedDB
 const dbName = 'mydb'
 
-describe('idb-schema', () => {
+describe('idb-schema', function idbSchemaTest() {
+  this.timeout(5000)
   let db
 
-  afterEach(function clean(done) {
+  before(clean)
+  afterEach(clean)
+
+  function clean(done) {
     if (db) {
       db.close()
       db = null
     }
-    const req = idb.deleteDatabase(dbName)
-    req.onblocked = () => clean(done) // transaction was not complete, repeat
-    req.onsuccess = () => done()
-  })
+    // avoid weird issue in Safari and IE
+    setTimeout(() => {
+      const req = idb.deleteDatabase(dbName)
+      req.onblocked = () => clean(done) // transaction was not complete, repeat
+      req.onsuccess = () => done()
+    }, 100)
+  }
 
   it('describes database', (done) => {
     const schema = new Schema()
@@ -43,7 +49,7 @@ describe('idb-schema', () => {
 
     const req = idb.open(dbName, schema.version())
     req.onupgradeneeded = schema.callback()
-    req.onerror = req.onblocked = done
+    req.onerror = done
     req.onsuccess = (e1) => {
       db = e1.target.result
       expect(db.version).equal(1)
@@ -51,18 +57,21 @@ describe('idb-schema', () => {
 
       const modules = db.transaction(['modules'], 'readonly').objectStore('modules')
       expect(modules.keyPath).equal('name')
-      expect(modules.autoIncrement).equal(false)
       expect(toArray(modules.indexNames).sort()).eql(
         ['byAuthor', 'byKeywords', 'byMaintainers', 'byRating'])
 
       const users = db.transaction(['users'], 'readonly').objectStore('users')
-      expect(users.autoIncrement).equal(true)
       expect(users.keyPath).equal('id')
 
       expect(modules.index('byMaintainers').unique).equal(false)
-      expect(modules.index('byMaintainers').multiEntry).equal(true)
       expect(modules.index('byAuthor').unique).equal(true)
-      expect(modules.index('byAuthor').multiEntry).equal(false)
+
+      if (modules.hasOwnProperty('autoIncrement')) {
+        expect(users.autoIncrement).equal(true)
+        expect(modules.autoIncrement).equal(false)
+        expect(modules.index('byMaintainers').multiEntry).equal(true)
+        expect(modules.index('byAuthor').multiEntry).equal(false)
+      }
 
       users.count().onsuccess = (e2) => {
         expect(e2.target.result).equal(3)
@@ -87,7 +96,7 @@ describe('idb-schema', () => {
 
     const req1 = idb.open(dbName, schema.version())
     req1.onupgradeneeded = schema.callback()
-    req1.onerror = req1.onblocked = done
+    req1.onerror = done
     req1.onsuccess = (e1) => {
       db = e1.target.result
       expect(db.version).equal(3)
@@ -101,7 +110,7 @@ describe('idb-schema', () => {
 
       const req2 = idb.open(dbName, schema.version())
       req2.onupgradeneeded = schema.callback()
-      req2.onerror = req2.onblocked = done
+      req2.onerror = done
       req2.onsuccess = (e2) => {
         db = e2.target.result
         expect(db.version).equal(4)

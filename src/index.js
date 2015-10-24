@@ -186,10 +186,10 @@ export default class Schema {
         if (oldVersion >= versionSchema.version) return
 
         versionSchema.stores.forEach((s) => {
-          db.createObjectStore(s.name, {
-            keyPath: s.keyPath,
-            autoIncrement: s.autoIncrement,
-          })
+          const opts = {}
+          if (s.keyPath) opts.keyPath = s.keyPath
+          if (s.autoIncrement) opts.autoIncrement = s.autoIncrement
+          db.createObjectStore(s.name, opts)
         })
 
         versionSchema.dropStores.forEach((s) => {
@@ -240,9 +240,7 @@ export default class Schema {
 
   clone() {
     const schema = new Schema()
-    schema._stores = clone(this._stores)
-    schema._current = clone(this._current)
-    schema._versions = clone(this._versions)
+    Object.keys(this).forEach((key) => schema[key] = clone(this[key]))
     return schema
   }
 }

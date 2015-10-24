@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "prepublish": "babel src --out-dir lib",
-    "test": "eslint lib/ test/ && browserify-test --transform babelify",
+    "test": "eslint src/ test/ && browserify-test --transform babelify",
     "development": "browserify-test --transform babelify --watch"
   },
   "dependencies": {
@@ -31,8 +31,7 @@
     "chai": "^3.4.0",
     "eslint": "^1.7.3",
     "eslint-config-airbnb": "^0.1.0",
-    "lodash.pluck": "^3.1.2",
-    "lodash.toarray": "^3.0.2",
+    "lodash": "^3.10.1",
     "treo-websql": "^2.0.0"
   }
 }
