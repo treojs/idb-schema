@@ -32,7 +32,9 @@ var schema = new Schema()
   .addIndex('byFrequency', 'frequency')
 .version(4)
   .getStore('magazines')
-  .delIndex('byPublisher');
+  .delIndex('byPublisher').addCallback(function (upgradeNeededEvent) {
+    // Do something else
+  });
 
 // get schema version
 schema.version(); // 4
@@ -143,6 +145,11 @@ Options:
 ### schema.delIndex(name)
 
 Delete index by `name` from current store.
+
+### schema.addCallback(cb)
+
+Adds a callback to be executed at the end of the `upgradeneeded` event.
+Callback will be supplied the `upgradeneeded` event object.
 
 ### schema.clone()
 
