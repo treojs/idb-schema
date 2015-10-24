@@ -10,23 +10,22 @@
     "schema",
     "treo"
   ],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "test": "browserify-test",
-    "start": "browserify-test -w"
+    "development": "browserify-test --watch"
   },
   "dependencies": {
     "component-clone": "^0.2.2",
-    "component-type": "^1.1.0",
+    "component-type": "1.1.0",
     "object-values": "^1.0.0"
   },
   "devDependencies": {
-    "browserify-test": "^1.2.0",
-    "chai": "^2.3.0",
-    "indexeddbshim": "^1.0.14",
-    "lodash.pluck": "^3.1.0",
-    "lodash.toarray": "^3.0.1"
-  },
-  "files": [
-    "lib"
-  ]
+    "browserify-test": "^2.0.0",
+    "chai": "^3.4.0",
+    "lodash.pluck": "^3.1.2",
+    "lodash.toarray": "^3.0.2"
+  }
 }
