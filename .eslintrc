@@ -3,13 +3,10 @@
     "commonjs": true,
     "mocha": true
   },
-  "extends": "airbnb/legacy",
+  "extends": "airbnb/base",
   "rules": {
     "semi": [2, "never"],
     "no-use-before-define": [2, "nofunc"],
-    "no-param-reassign": 0, // better to use ES6 default args
-    "func-names": 0, // better to use ES6 classes for explicit errors
-    "vars-on-top": 0, // does not apply for ES6 let/const
     "id-length": 0,
     "object-curly-spacing": [2, "always"]
   }

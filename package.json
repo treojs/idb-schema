@@ -14,8 +14,8 @@
     "lib"
   ],
   "scripts": {
-    "test": "eslint lib/ test/ && browserify-test",
-    "development": "browserify-test --watch"
+    "test": "eslint lib/ test/ && browserify-test --transform babelify",
+    "development": "browserify-test --transform babelify --watch"
   },
   "dependencies": {
     "component-clone": "^0.2.2",
@@ -23,6 +23,8 @@
     "object-values": "^1.0.0"
   },
   "devDependencies": {
+    "babel-eslint": "^4.1.3",
+    "babelify": "^6.4.0",
     "browserify-test": "^2.0.0",
     "chai": "^3.4.0",
     "eslint": "^1.7.3",
