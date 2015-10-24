@@ -27,6 +27,12 @@ describe('idb-schema', function() {
     .addIndex('byRating', ['stars', 'position'])
     .addIndex('byMaintainers', 'maintainers', { multi: true })
     .addStore('users', { increment: true })
+    .addCallback(function(e) {
+      var users = e.target.transaction.objectStore('users')
+      users.put({ name: 'Fred' })
+      users.put({ name: 'Fred' })
+      users.put({ name: 'Barney' })
+    })
 
     expect(schema.callback()).a('function')
     expect(schema.version()).equal(1)
@@ -55,7 +61,11 @@ describe('idb-schema', function() {
       expect(modules.index('byMaintainers').multiEntry).true
       expect(modules.index('byAuthor').unique).true
       expect(modules.index('byAuthor').multiEntry).false
-      done()
+
+      users.count().onsuccess = function(e) {
+        expect(e.target.result).equal(3)
+        done()
+      }
     }
   })
 
