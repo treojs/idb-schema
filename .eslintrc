@@ -5,7 +5,7 @@
   "rules": {
     "indent": [2, 2],
     "semi": [2, "never"],
-    "curly": [2, "multi"],
+    "curly": [2, "multi-line"],
     "require-jsdoc": 0,
     "valid-jsdoc": 0,
     "no-use-before-define": 0,
