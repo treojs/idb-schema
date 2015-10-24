@@ -42,28 +42,28 @@ describe('idb-schema', function() {
     var req = idb.open(dbName, schema.version())
     req.onupgradeneeded = schema.callback()
     req.onerror = req.onblocked = done
-    req.onsuccess = function onsuccess(e) {
-      db = e.target.result
+    req.onsuccess = function(e1) {
+      db = e1.target.result
       expect(db.version).equal(1)
       expect(toArray(db.objectStoreNames)).eql(['modules', 'users'])
 
       var modules = db.transaction(['modules'], 'readonly').objectStore('modules')
       expect(modules.keyPath).equal('name')
-      expect(modules.autoIncrement).false
+      expect(modules.autoIncrement).equal(false)
       expect(toArray(modules.indexNames).sort()).eql(
         ['byAuthor', 'byKeywords', 'byMaintainers', 'byRating'])
 
       var users = db.transaction(['users'], 'readonly').objectStore('users')
-      expect(users.keyPath).null
-      expect(users.autoIncrement).true
+      expect(users.keyPath).equal(null)
+      expect(users.autoIncrement).equal(true)
 
-      expect(modules.index('byMaintainers').unique).false
-      expect(modules.index('byMaintainers').multiEntry).true
-      expect(modules.index('byAuthor').unique).true
-      expect(modules.index('byAuthor').multiEntry).false
+      expect(modules.index('byMaintainers').unique).equal(false)
+      expect(modules.index('byMaintainers').multiEntry).equal(true)
+      expect(modules.index('byAuthor').unique).equal(true)
+      expect(modules.index('byAuthor').multiEntry).equal(false)
 
-      users.count().onsuccess = function(e) {
-        expect(e.target.result).equal(3)
+      users.count().onsuccess = function(e2) {
+        expect(e2.target.result).equal(3)
         done()
       }
     }
@@ -86,8 +86,8 @@ describe('idb-schema', function() {
     var req = idb.open(dbName, schema.version())
     req.onupgradeneeded = schema.callback()
     req.onerror = req.onblocked = done
-    req.onsuccess = function onsuccess(e) {
-      db = e.target.result
+    req.onsuccess = function(e1) {
+      db = e1.target.result
       expect(db.version).equal(3)
       expect(toArray(db.objectStoreNames)).eql(['books', 'magazines'])
       db.close()
@@ -100,8 +100,8 @@ describe('idb-schema', function() {
       req = idb.open(dbName, schema.version())
       req.onupgradeneeded = schema.callback()
       req.onerror = req.onblocked = done
-      req.onsuccess = function onsuccess(e) {
-        db = e.target.result
+      req.onsuccess = function(e2) {
+        db = e2.target.result
         expect(db.version).equal(4)
         expect(toArray(db.objectStoreNames)).eql(['magazines'])
 

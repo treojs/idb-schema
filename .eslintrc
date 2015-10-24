@@ -1,23 +1,16 @@
 {
   "env": {
-    "node": true,
+    "commonjs": true,
     "mocha": true
   },
+  "extends": "airbnb/legacy",
   "rules": {
-    "indent": [2, 2],
     "semi": [2, "never"],
-    "curly": [2, "multi-line"],
-    "require-jsdoc": 0,
-    "valid-jsdoc": 0,
-    "no-use-before-define": 0,
-    "space-before-function-paren": 0,
-    "dot-location": 0,
-    "block-spacing": 0,
-    "object-curly-spacing": 0,
-    "no-magic-numbers": 0,
-    "no-undef": 2,
-    "quotes": [2, "single", "avoid-escape"],
-    "key-spacing": 2,
+    "no-use-before-define": [2, "nofunc"],
+    "no-param-reassign": 0, // better to use ES6 default args
+    "func-names": 0, // better to use ES6 classes for explicit errors
+    "vars-on-top": 0, // does not apply for ES6 let/const
+    "id-length": 0,
     "object-curly-spacing": [2, "always"]
   }
 }
