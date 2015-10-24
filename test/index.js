@@ -1,8 +1,8 @@
+require('treo-websql').polyfill()
 var expect = require('chai').expect
 var pluck = require('lodash.pluck')
 var toArray = require('lodash.toarray')
 var Schema = require('../lib')
-if (!global.indexedDB) require('indexeddbshim')
 
 describe('idb-schema', function() {
   var idb = global.indexedDB
