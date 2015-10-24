@@ -14,7 +14,7 @@
     "lib"
   ],
   "scripts": {
-    "test": "eslint lib/ && browserify-test",
+    "test": "eslint lib/ test/ && browserify-test",
     "development": "browserify-test --watch"
   },
   "dependencies": {
