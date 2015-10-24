@@ -1,3 +1,9 @@
+## 2.1.0 / 2015-10-24
+
+* add `schema.addCallback()` [@brettz9](https://github.com/brettz9)
+* use eslint [@brettz9](https://github.com/brettz9)
+* use treo-websql
+
 ## 2.0.0 / 2015-05-01
 
 * remove legacy `dropStore` and `dropIndex`
