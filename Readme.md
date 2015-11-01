@@ -10,15 +10,15 @@
 
     npm install --save idb-schema
 
-It works in legacy browsers through [IndexedDBShim](https://github.com/axemclion/IndexedDBShim).
+It also works in legacy but you need to require [IndexedDBShim](https://github.com/axemclion/IndexedDBShim).
 
 ## Example
 
 ```js
-var Schema = require('idb-schema')
+import Schema from 'idb-schema'
 
 // define schema
-var schema = new Schema()
+const schema = new Schema()
 .version(1)
   .addStore('books', { key: 'isbn' })
   .addIndex('byTitle', 'title', { unique: true })
@@ -33,8 +33,8 @@ var schema = new Schema()
 .version(4)
   .getStore('magazines')
   .delIndex('byPublisher')
-  .addCallback(function(upgradeNeededEvent) {
-    // Do something else
+  .addCallback((upgradeNeededEvent) => {
+    // do something custom
   })
 
 // get schema version
@@ -56,10 +56,10 @@ schema.stores()
 Generate `onupgradeneeded` callback.
 
 ```js
-var req = indexedDB.open('mydb', schema.version())
+const req = indexedDB.open('mydb', schema.version())
 req.onupgradeneeded = schema.callback()
-req.onsuccess = function onsuccess(e) {
-  var db = e.target.result
+req.onsuccess = (e) => {
+  const db = e.target.result
 }
 ```
 
@@ -149,12 +149,22 @@ Delete index by `name` from current store.
 
 ### schema.addCallback(cb)
 
-Adds a callback to be executed at the end of the `upgradeneeded` event.
-Callback will be supplied the `upgradeneeded` event object.
+Add `cb` to be executed at the end of the `upgradeneeded` event.
+
+```js
+new Schema()
+.addStore('users', { increment: true, keyPath: 'id' })
+.addIndex('byName', 'name')
+.addCallback((e) => {
+  const users = e.target.transaction.objectStore('users')
+  users.put({ name: 'Fred' })
+  users.put({ name: 'Barney' })
+})
+```
 
 ### schema.clone()
 
-Make a deep clone of current schema.
+Return a deep clone of current schema.
 
 ## License
 

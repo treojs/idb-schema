@@ -22,6 +22,7 @@ describe('idb-schema', function idbSchemaTest() {
     // avoid weird issue in Safari and IE
     setTimeout(() => {
       const req = idb.deleteDatabase(dbName)
+      req.onerror = done
       req.onblocked = () => clean(done) // transaction was not complete, repeat
       req.onsuccess = () => done()
     }, 100)
@@ -38,7 +39,7 @@ describe('idb-schema', function idbSchemaTest() {
     .addCallback((e) => {
       const users = e.target.transaction.objectStore('users')
       users.put({ name: 'Fred' })
-      users.put({ name: 'Fred' })
+      users.put({ name: 'John' })
       users.put({ name: 'Barney' })
     })
 
@@ -66,6 +67,8 @@ describe('idb-schema', function idbSchemaTest() {
       expect(modules.index('byMaintainers').unique).equal(false)
       expect(modules.index('byAuthor').unique).equal(true)
 
+      // https://msdn.microsoft.com/en-us/library/hh772528(v=vs.85).aspx
+      // https://msdn.microsoft.com/en-us/library/hh772573(v=vs.85).aspx
       if (modules.hasOwnProperty('autoIncrement')) {
         expect(users.autoIncrement).equal(true)
         expect(modules.autoIncrement).equal(false)
