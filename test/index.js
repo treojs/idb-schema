@@ -104,25 +104,27 @@ describe('idb-schema', function idbSchemaTest() {
       db = e1.target.result
       expect(db.version).equal(3)
       expect(toArray(db.objectStoreNames)).eql(['books', 'magazines'])
+
       db.close()
+      setTimeout(() => {
+        schema.version(4)
+        .delStore('books')
+        .getStore('magazines')
+        .delIndex('byPublisher')
 
-      schema.version(4)
-      .delStore('books')
-      .getStore('magazines')
-      .delIndex('byPublisher')
+        const req2 = idb.open(dbName, schema.version())
+        req2.onupgradeneeded = schema.callback()
+        req2.onerror = done
+        req2.onsuccess = (e2) => {
+          db = e2.target.result
+          expect(db.version).equal(4)
+          expect(toArray(db.objectStoreNames)).eql(['magazines'])
 
-      const req2 = idb.open(dbName, schema.version())
-      req2.onupgradeneeded = schema.callback()
-      req2.onerror = done
-      req2.onsuccess = (e2) => {
-        db = e2.target.result
-        expect(db.version).equal(4)
-        expect(toArray(db.objectStoreNames)).eql(['magazines'])
-
-        const magazines = db.transaction(['magazines'], 'readonly').objectStore('magazines')
-        expect(toArray(magazines.indexNames)).eql(['byFrequency'])
-        done()
-      }
+          const magazines = db.transaction(['magazines'], 'readonly').objectStore('magazines')
+          expect(toArray(magazines.indexNames)).eql(['byFrequency'])
+          done()
+        }
+      }, 100)
     }
   })
 
