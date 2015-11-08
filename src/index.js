@@ -1,6 +1,6 @@
-import type from 'component-type'
 import clone from 'component-clone'
 import values from 'object-values'
+import isFinite from 'is-finite'
 
 /**
  * Maximum version value (unsigned long long)
@@ -30,10 +30,7 @@ export default class Schema {
 
   version(version) {
     if (!arguments.length) return this._current.version
-    if (type(version) !== 'number'
-    || version < 1
-    || version < this.version()
-    || version > MAX_VERSION) {
+    if (!isFinite(version) || version < 1 || version < this.version() || version > MAX_VERSION) {
       throw new TypeError('not valid version')
     }
 
@@ -59,7 +56,7 @@ export default class Schema {
    */
 
   addStore(name, opts = {}) {
-    if (type(name) !== 'string') throw new TypeError('`name` is required')
+    if (typeof name !== 'string') throw new TypeError('`name` is required')
     if (this._stores[name]) throw new TypeError('store is already defined')
 
     const store = {
@@ -87,7 +84,7 @@ export default class Schema {
    */
 
   delStore(name) {
-    if (type(name) !== 'string') throw new TypeError('`name` is required')
+    if (typeof name !== 'string') throw new TypeError('`name` is required')
     const store = this._stores[name]
     if (!store) throw new TypeError('store is not defined')
     delete this._stores[name]
@@ -104,7 +101,7 @@ export default class Schema {
    */
 
   getStore(name) {
-    if (type(name) !== 'string') throw new TypeError('`name` is required')
+    if (typeof name !== 'string') throw new TypeError('`name` is required')
     if (!this._stores[name]) throw new TypeError('store is not defined')
     this._current.store = this._stores[name]
     return this
@@ -120,8 +117,8 @@ export default class Schema {
    */
 
   addIndex(name, field, opts = {}) {
-    if (type(name) !== 'string') throw new TypeError('`name` is required')
-    if (type(field) !== 'string' && type(field) !== 'array') {
+    if (typeof name !== 'string') throw new TypeError('`name` is required')
+    if (typeof field !== 'string' && !Array.isArray(field)) {
       throw new TypeError('`field` is required')
     }
     const store = this._current.store
@@ -148,7 +145,7 @@ export default class Schema {
    */
 
   delIndex(name) {
-    if (type(name) !== 'string') throw new TypeError('`name` is required')
+    if (typeof name !== 'string') throw new TypeError('`name` is required')
     const index = this._current.store.indexes[name]
     if (!index) throw new TypeError('index is not defined')
     delete this._current.store.indexes[name]
