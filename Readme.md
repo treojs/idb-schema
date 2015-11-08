@@ -6,6 +6,8 @@
 
 > IndexedDB schema manager.
 
+[![](https://saucelabs.com/browser-matrix/idb-schema.svg)](https://saucelabs.com/u/idb-schema)
+
 ## Installation
 
     npm install --save idb-schema
