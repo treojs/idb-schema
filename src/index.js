@@ -186,6 +186,8 @@ export default class Schema {
         if (oldVersion >= versionSchema.version) return
 
         versionSchema.stores.forEach((s) => {
+          // Only pass the options that are explicitly specified to createObjectStore() otherwise IE/Edge
+          // can throw an InvalidAccessError - see https://msdn.microsoft.com/en-us/library/hh772493(v=vs.85).aspx
           const opts = {}
           if (s.keyPath) opts.keyPath = s.keyPath
           if (s.autoIncrement) opts.autoIncrement = s.autoIncrement
