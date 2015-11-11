@@ -8,11 +8,15 @@
 
 [![](https://saucelabs.com/browser-matrix/idb-schema.svg)](https://saucelabs.com/u/idb-schema)
 
+It provides declarative schema management API and fixes inconsistency between browsers:
+- [Incorrect value of oldVersion in Safari](https://bugs.webkit.org/show_bug.cgi?id=136888) during `onupgradeneeded` event
+- [InvalidAccessError in Internet Explorer](https://msdn.microsoft.com/en-us/library/hh772493(v=vs.85).aspx), when autoIncrement or keyPath are `false`
+
 ## Installation
 
     npm install --save idb-schema
 
-It also works in legacy but you need to require [IndexedDBShim](https://github.com/axemclion/IndexedDBShim).
+Use [IndexedDBShim](https://github.com/axemclion/IndexedDBShim) to fallback to WebSQL.
 
 ## Example
 
