@@ -23,7 +23,7 @@
   },
   "dependencies": {
     "component-clone": "^0.2.2",
-    "is-finite": "^1.0.1",
+    "is-integer": "^1.0.6",
     "object-values": "^1.0.0"
   },
   "devDependencies": {

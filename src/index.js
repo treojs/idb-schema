@@ -1,6 +1,6 @@
 import clone from 'component-clone'
 import values from 'object-values'
-import isFinite from 'is-finite'
+import isInteger from 'is-integer'
 
 /**
  * Maximum version value (unsigned long long)
@@ -30,7 +30,7 @@ export default class Schema {
 
   version(version) {
     if (!arguments.length) return this._current.version
-    if (!isFinite(version) || version < 1 || version < this.version() || version > MAX_VERSION) {
+    if (!isInteger(version) || version < 1 || version < this.version() || version > MAX_VERSION) {
       throw new TypeError('not valid version')
     }
 
