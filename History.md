@@ -1,3 +1,10 @@
+## 3.1.0 / 2015-11-13
+
+* use ES6's `isInteger` instead of `component-type`
+* use `babel@6` for build
+* use `zuul` to run CI tests in all supported browsers
+* better docs
+
 ## 3.0.0 / 2015-11-03
 
 * **breaking**: require keyPath when autoIncrement set to true
