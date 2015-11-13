@@ -3,6 +3,7 @@
 > IndexedDB schema manager.
 
 [![](https://saucelabs.com/browser-matrix/idb-schema.svg)](https://saucelabs.com/u/idb-schema)
+
 [![](https://img.shields.io/npm/v/idb-schema.svg)](https://npmjs.org/package/idb-schema)
 [![](https://img.shields.io/travis/treojs/idb-schema.svg)](https://travis-ci.org/treojs/idb-schema)
 [![](http://img.shields.io/npm/dm/idb-schema.svg)](https://npmjs.org/package/idb-schema)
