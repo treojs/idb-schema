@@ -37,6 +37,6 @@
     "eslint-config-airbnb": "^1.0.0",
     "lodash": "^3.10.1",
     "treo-websql": "^2.0.0",
-    "zuul": "^3.7.2"
+    "zuul": "alekseykulikov/zuul#11e2d84"
   }
 }

@@ -8,13 +8,11 @@ browsers:
     version: -1..latest
   - name: firefox
     version: -1..latest
-  - name: microsoftedge
-    version: latest
   - name: internet explorer
     version: 10..latest
   - name: android
-    version: ['4.4', '5.1']
+    version: '4.4..latest'
   - name: safari
     version: 6..latest
   - name: iphone
-    version: ['6.0', '7.0', '8.0', '9.0..latest']
+    version: ['6.0', '8.0..8.4']
