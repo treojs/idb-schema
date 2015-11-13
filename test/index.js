@@ -19,11 +19,9 @@ describe('idb-schema', function idbSchemaTest() {
       db.close()
       db = null
     }
-    // avoid weird issue in Safari and IE
     setTimeout(() => {
       const req = idb.deleteDatabase(dbName)
       req.onerror = done
-      req.onblocked = () => clean(done) // transaction was not complete, repeat
       req.onsuccess = () => done()
     }, 100)
   }
@@ -149,4 +147,6 @@ describe('idb-schema', function idbSchemaTest() {
     expect(pluck(schema1.stores(), 'name')).eql(['books'])
     expect(pluck(schema2.stores(), 'name')).eql(['books', 'magazines'])
   })
+
+  it('validates arguments')
 })
