@@ -3,6 +3,7 @@ browserify:
   - transform:
       name: babelify
       presets: es2015
+      plugins: add-module-exports
 browsers:
   - name: chrome
     version: -1..latest
@@ -13,6 +14,6 @@ browsers:
   - name: android
     version: '4.4..latest'
   - name: safari
-    version: 6..latest
+    version: 8..latest
   - name: iphone
-    version: ['6.0', '8.0..8.4']
+    version: '7.1..8.4'
