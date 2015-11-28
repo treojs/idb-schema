@@ -86,18 +86,20 @@ describe('idb-schema', function idbSchemaTest() {
       expect(toArray(db.objectStoreNames)).eql(['books', 'magazines'])
 
       db.close()
-      schema.version(4)
-      .delStore('books')
-      .getStore('magazines')
-      .delIndex('byPublisher')
+      return new Promise((resolve) => setTimeout(resolve, 100)).then(() => {
+        schema.version(4)
+        .delStore('books')
+        .getStore('magazines')
+        .delIndex('byPublisher')
 
-      return open(dbName, schema.version(), schema.callback()).then((originDb2) => {
-        db = originDb2
-        expect(db.version).equal(4)
-        expect(toArray(db.objectStoreNames)).eql(['magazines'])
+        return open(dbName, schema.version(), schema.callback()).then((originDb2) => {
+          db = originDb2
+          expect(db.version).equal(4)
+          expect(toArray(db.objectStoreNames)).eql(['magazines'])
 
-        const magazines = db.transaction(['magazines'], 'readonly').objectStore('magazines')
-        expect(toArray(magazines.indexNames)).eql(['byFrequency'])
+          const magazines = db.transaction(['magazines'], 'readonly').objectStore('magazines')
+          expect(toArray(magazines.indexNames)).eql(['byFrequency'])
+        })
       })
     })
   })
