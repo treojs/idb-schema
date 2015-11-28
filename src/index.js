@@ -31,7 +31,7 @@ export default class Schema {
   version(version) {
     if (!arguments.length) return this._current.version
     if (!isInteger(version) || version < 1 || version < this.version() || version > MAX_VERSION) {
-      throw new TypeError('not valid version')
+      throw new TypeError('invalid version')
     }
 
     this._current = { version: version, store: null }
@@ -56,8 +56,8 @@ export default class Schema {
    */
 
   addStore(name, opts = {}) {
-    if (typeof name !== 'string') throw new TypeError('`name` is required')
-    if (this._stores[name]) throw new TypeError('store is already defined')
+    if (typeof name !== 'string' || !name) throw new TypeError('"name" is required')
+    if (this._stores[name]) throw new TypeError(`"${name}" store is already defined`)
 
     const store = {
       name: name,
@@ -84,9 +84,9 @@ export default class Schema {
    */
 
   delStore(name) {
-    if (typeof name !== 'string') throw new TypeError('`name` is required')
+    if (typeof name !== 'string' || !name) throw new TypeError('"name" is required')
     const store = this._stores[name]
-    if (!store) throw new TypeError('store is not defined')
+    if (!store) throw new TypeError(`"${name}" store is not defined`)
     delete this._stores[name]
     this._versions[this.version()].dropStores.push(store)
     this._current.store = null
@@ -101,8 +101,8 @@ export default class Schema {
    */
 
   getStore(name) {
-    if (typeof name !== 'string') throw new TypeError('`name` is required')
-    if (!this._stores[name]) throw new TypeError('store is not defined')
+    if (typeof name !== 'string' || !name) throw new TypeError('"name" is required')
+    if (!this._stores[name]) throw new TypeError(`"${name}" store is not defined`)
     this._current.store = this._stores[name]
     return this
   }
@@ -117,12 +117,13 @@ export default class Schema {
    */
 
   addIndex(name, field, opts = {}) {
-    if (typeof name !== 'string') throw new TypeError('`name` is required')
+    if (typeof name !== 'string' || !name) throw new TypeError('"name" is required')
     if (typeof field !== 'string' && !Array.isArray(field)) {
-      throw new TypeError('`field` is required')
+      throw new TypeError('"field" is required')
     }
     const store = this._current.store
-    if (store.indexes[name]) throw new TypeError('index is already defined')
+    if (!store) throw new TypeError('set current store using "getStore" or "addStore"')
+    if (store.indexes[name]) throw new TypeError(`"${name}" index is already defined`)
 
     const index = {
       name: name,
@@ -145,9 +146,9 @@ export default class Schema {
    */
 
   delIndex(name) {
-    if (typeof name !== 'string') throw new TypeError('`name` is required')
+    if (typeof name !== 'string' || !name) throw new TypeError('"name" is required')
     const index = this._current.store.indexes[name]
-    if (!index) throw new TypeError('index is not defined')
+    if (!index) throw new TypeError(`"${name}" index is not defined`)
     delete this._current.store.indexes[name]
     this._versions[this.version()].dropIndexes.push(index)
     return this

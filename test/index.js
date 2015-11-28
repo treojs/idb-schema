@@ -13,7 +13,7 @@ describe('idb-schema', function idbSchemaTest() {
   let db
 
   before(() => del(dbName))
-  afterEach(() => del(db))
+  afterEach(() => del(db || dbName))
 
   it('describes database', () => {
     const schema = new Schema()
@@ -124,5 +124,45 @@ describe('idb-schema', function idbSchemaTest() {
     expect(pluck(schema2.stores(), 'name')).eql(['books', 'magazines'])
   })
 
-  it('validates arguments')
+  it('validates arguments', () => {
+    const schema = new Schema()
+    .version(1)
+      .addStore('books', { keyPath: 'isbn' })
+      .addIndex('byTitle', 'title', { unique: true })
+      .addIndex('byAuthor', 'author')
+    .version(2)
+      .getStore('books')
+      .addIndex('byYear', 'year')
+
+    // version
+    expect(() => new Schema().version(0)).throws('invalid version')
+    expect(() => new Schema().version(-1)).throws('invalid version')
+    expect(() => new Schema().version(2.5)).throws('invalid version')
+    expect(() => new Schema().version(Math.pow(2, 32))).throws('invalid version')
+
+    // addStore
+    expect(() => new Schema().addStore()).throws('"name" is required')
+    expect(() => new Schema().addStore(101)).throws('"name" is required')
+    expect(() => new Schema().addStore(101)).throws('"name" is required')
+    expect(() => schema.addStore('books')).throws('"books" store is already defined')
+    expect(() => new Schema().addStore('books', { autoIncrement: true })).throws('set keyPath in order to use autoIncrement')
+
+    // delStore
+    expect(() => new Schema().delStore()).throws('"name" is required')
+    expect(() => new Schema().delStore('books')).throws('"books" store is not defined')
+
+    // getStore
+    expect(() => new Schema().getStore()).throws('"name" is required')
+    expect(() => new Schema().getStore('books')).throws('"books" store is not defined')
+
+    // addIndex
+    expect(() => new Schema().addStore('books').addIndex(null, 'title')).throws('"name" is required')
+    expect(() => new Schema().addStore('books').addIndex('byTitle')).throws('"field" is required')
+    expect(() => new Schema().addIndex('byTitle', 'title')).throws('set current store using "getStore" or "addStore"')
+    expect(() => schema.addIndex('byTitle', 'title')).throws('"byTitle" index is already defined')
+
+    // delIndex
+    expect(() => schema.delIndex('')).throws('"name" is required')
+    expect(() => schema.delIndex('byField')).throws('"byField" index is not defined')
+  })
 })
