@@ -34,10 +34,13 @@
     "babelify": "^7.2.0",
     "browserify-test": "^2.1.2",
     "chai": "^3.4.1",
+    "es6-promise": "^3.0.2",
     "eslint": "^1.9.0",
     "eslint-config-airbnb": "^1.0.0",
+    "idb-factory": "^1.0.0",
+    "idb-request": "^3.0.0",
+    "indexeddbshim": "^2.2.1",
     "lodash": "^3.10.1",
-    "treo-websql": "^2.0.0",
     "zuul": "^3.7.3"
   }
 }
