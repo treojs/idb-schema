@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "prepublish": "babel src --out-dir lib",
-    "test": "eslint src/ test/ && browserify-test -t babelify && SAUCE_USERNAME=idb-schema zuul --no-coverage -- test/index.js",
+    "test": "eslint src/ test/ && browserify-test -t babelify && SAUCE_USERNAME=idb-schema zuul --tunnel-host http://treojs.com --no-coverage -- test/index.js",
     "development": "browserify-test -t babelify --watch"
   },
   "dependencies": {
