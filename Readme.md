@@ -8,7 +8,8 @@
 [![](https://img.shields.io/travis/treojs/idb-schema.svg)](https://travis-ci.org/treojs/idb-schema)
 [![](http://img.shields.io/npm/dm/idb-schema.svg)](https://npmjs.org/package/idb-schema)
 
-It provides declarative schema management API and fixes inconsistency between browsers:
+This modules provides declarative schema management API for IndexedDB.
+And it also fixes inconsistency between browsers:
 - [Incorrect value of oldVersion in Safari](https://bugs.webkit.org/show_bug.cgi?id=136888) during `onupgradeneeded` event
 - [InvalidAccessError in Internet Explorer](https://msdn.microsoft.com/en-us/library/hh772493(v=vs.85).aspx), when autoIncrement or keyPath are `false`
 
