@@ -1,3 +1,8 @@
+## 3.2.1 / 2015-11-29
+
+* remove `component-clone` as deps,
+  it reduced build size from 8kb to 1.8kb
+
 ## 3.2.0 / 2015-11-28
 
 * improve arguments validation and error messages

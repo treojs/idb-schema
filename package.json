@@ -2,7 +2,7 @@
   "name": "idb-schema",
   "description": "IndexedDB schema manager",
   "repository": "treojs/idb-schema",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "license": "MIT",
   "main": "lib/index.js",
   "files": [
