@@ -21,8 +21,8 @@
     "development": "browserify-test -t babelify --watch"
   },
   "dependencies": {
-    "component-clone": "^0.2.2",
     "is-integer": "^1.0.6",
+    "is-plain-obj": "^1.1.0",
     "object-values": "^1.0.0"
   },
   "devDependencies": {

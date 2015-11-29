@@ -1,6 +1,6 @@
-import clone from 'component-clone'
 import values from 'object-values'
 import isInteger from 'is-integer'
+import isPlainObj from 'is-plain-obj'
 
 /**
  * Maximum version value (unsigned long long)
@@ -243,4 +243,22 @@ export default class Schema {
     Object.keys(this).forEach((key) => schema[key] = clone(this[key]))
     return schema
   }
+}
+
+/**
+ * Clone `obj`.
+ * https://github.com/component/clone/blob/master/index.js
+ */
+
+function clone(obj) {
+  if (Array.isArray(obj)) {
+    return obj.map((val) => clone(val))
+  }
+  if (isPlainObj(obj)) {
+    return Object.keys(obj).reduce((copy, key) => {
+      copy[key] = clone(obj[key])
+      return copy
+    }, {})
+  }
+  return obj
 }
